@@ -25,67 +25,59 @@ export default class UserCard extends React.Component {
 
     render() {
         const { Auth, user } = this.props;
-        var connection_msg = 'Send friend request';
-        var remove_msg = 'Remove friend';
+
+        var connection_msg = 'Send a friend request';
+
         if(Auth.user.is_project_owner) {
             connection_msg = 'Add to my team';
-            remove_msg = 'Remove from my team';
+
         } else if(user.is_project_owner) {
             connection_msg = 'Send request to join team';
             remove_msg = 'Leave team';
         }
 
         return (
-            <div className="well card user">
-                <UserCardProfile user={user}/>
-                {user.profile?(
-                <div>
-                    {user.profile.skills.length?(
-                    <TagList tags={user.profile.skills} max={3} link={`/member/${user.id}/`}/>
-                        ):(
-                    <div style={{height: '20px'}}></div>
-                        )}
-                </div>
-                    ):(
-                <div style={{height: '20px'}}></div>
-                    )}
-                <div className="actions">
+            <section>
+                <div className="container">
                     <div className="row">
-                        <div className="col-sm-12">
-                            <Link to={`/member/${user.id}/`} className="btn btn-block btn-default">View full profile</Link>
-                        </div>
-                    </div>
+                        <div className="col-md-4 card-container">
+                            <UserCardProfile user={user}/>
 
-                    {user.can_connect?(
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <button type="button" className="btn btn-block btn-default"
-                                    onClick={this.handleConnectRequest.bind(this)}>{connection_msg}</button>
-                        </div>
-                    </div>
-                        ):(
-                        user.request?(
-                        <div className="row">
-                            <div className="col-sm-6">
-                                <button type="button" className="btn btn-block btn-default"
-                                        onClick={this.handleConnectResponse.bind(this, true)}>Accept</button>
+                            <div className="row">
+                                <div className="col-md-12 profile-btn">
+                                    <Link to={`/member/${user.id}/`}>
+                                        <button className="btn btn-default">Go to profile</button>
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="col-sm-6">
-                                <button type="button" className="btn btn-block btn-default"
-                                        onClick={this.handleConnectResponse.bind(this, false)}>Decline</button>
-                            </div>
-                        </div>
+
+                            {user.can_connect?(
+                                <div className="row">
+                                    <div className="col-md-12 friend-req-btn">
+                                        <button className="btn btn-default">{connection_msg}</button>
+                                    </div>
+                                </div>
+
+                            ):(user.request?(
+                                <div>
+                                <div className="row">
+                                    <div className="col-md-12 friend-acc-btn">
+                                        <button className="btn btn-default" onClick={this.handleConnectResponse.bind(this, true)}>Accept Request</button>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-12 friend-dec-btn">
+                                        <button className="btn btn-default" onClick={this.handleConnectResponse.bind(this, false)}>Decline Request</button>
+                                    </div>
+                                </div>
+                                </div>
                             ):null)}
-                    {user.connection && user.connection.accepted?(
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <button type="button" className="btn btn-block btn-default"
-                                    onClick={this.handleDeleteConnection.bind(this)}>{remove_msg}</button>
+
                         </div>
                     </div>
-                        ):null}
                 </div>
-            </div>
+            </section>
         );
     }
 }
