@@ -37,47 +37,41 @@ export default class UserCard extends React.Component {
         }
 
         return (
-            <section>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-4 card-container">
-                            <UserCardProfile user={user}/>
+            <div className="card-container">
+                <UserCardProfile user={user}/>
 
-                            <div className="row">
-                                <div className="col-md-12 profile-btn">
-                                    <Link to={`/member/${user.id}/`}>
-                                        <button className="btn btn-default">Go to profile</button>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            {user.can_connect?(
-                                <div className="row">
-                                    <div className="col-md-12 friend-req-btn">
-                                        <button className="btn btn-default">{connection_msg}</button>
-                                    </div>
-                                </div>
-
-                            ):(user.request?(
-                                <div>
-                                <div className="row">
-                                    <div className="col-md-12 friend-acc-btn">
-                                        <button className="btn btn-default" onClick={this.handleConnectResponse.bind(this, true)}>Accept Request</button>
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-md-12 friend-dec-btn">
-                                        <button className="btn btn-default" onClick={this.handleConnectResponse.bind(this, false)}>Decline Request</button>
-                                    </div>
-                                </div>
-                                </div>
-                            ):null)}
-
-                        </div>
+                <div className="row">
+                    <div className="col-md-11 profile-btn">
+                        <Link to={`/member/${user.id}/`}>
+                            <button className="btn btn-default">Go to profile</button>
+                        </Link>
                     </div>
                 </div>
-            </section>
+
+                {user.can_connect?(
+                    <div className="row">
+                        <div className="col-md-11 friend-req-btn">
+                            <button className="btn btn-default">{connection_msg}</button>
+                        </div>
+                    </div>
+
+                ):(user.request?(
+                    <div>
+                    <div className="row">
+                        <div className="col-md-11 friend-acc-btn">
+                            <button className="btn btn-default" onClick={this.handleConnectResponse.bind(this, true)}>Accept Request</button>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-md-11 friend-dec-btn">
+                            <button className="btn btn-default" onClick={this.handleConnectResponse.bind(this, false)}>Decline Request</button>
+                        </div>
+                    </div>
+                    </div>
+                ):null)}
+
+            </div>
         );
     }
 }

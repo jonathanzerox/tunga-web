@@ -8,7 +8,7 @@ export default class Avatar extends React.Component {
             <div style={{display: 'inline-block'}}>
                 {image?(
                 <div className={"avatar " + (size?size:'')}>
-                    <img src={image}/>
+                    <img className="img-responsive" src={image}/>
                 </div>
                     ):(
                 <i className={"glyphicon glyphicon-user avatar-icon " + (size?size:null)}/>
